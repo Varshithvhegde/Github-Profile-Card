@@ -23,10 +23,11 @@ interface Repository {
 interface MyCardProps {
   dataUser: string;
   dataTheme?: string;
+  authToken?: string;
 }
 
 const MyCard: React.ForwardRefRenderFunction<HTMLDivElement, MyCardProps> = (
-  { dataUser, dataTheme = 'dark' },
+  { dataUser, dataTheme = 'white', authToken },
   ref
 ) => {
   const [user, setUser] = useState<User | null>(null);
@@ -35,11 +36,19 @@ const MyCard: React.ForwardRefRenderFunction<HTMLDivElement, MyCardProps> = (
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userResponse = await fetch(`https://api.github.com/users/${dataUser}`);
+        const userResponse = await fetch(`https://api.github.com/users/${dataUser}`, {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
         const userData: User = await userResponse.json();
         setUser(userData);
 
-        const reposResponse = await fetch(`https://api.github.com/users/${dataUser}/repos`);
+        const reposResponse = await fetch(`https://api.github.com/users/${dataUser}/repos`, {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
         const reposData: Repository[] = await reposResponse.json();
 
         const sortedRepos = reposData.sort((a, b) => b.stargazers_count - a.stargazers_count);
@@ -52,7 +61,7 @@ const MyCard: React.ForwardRefRenderFunction<HTMLDivElement, MyCardProps> = (
     };
 
     fetchData();
-  }, [dataUser]);
+  }, [dataUser, authToken]);
 
   const createCard = (user: User, topStarredRepos: Repository[]) => {
     const cardClassName = `${styles.card} ${dataTheme === 'dark' ? styles.dark : ''}`;
