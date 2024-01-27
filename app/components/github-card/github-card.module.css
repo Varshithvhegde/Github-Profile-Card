@@ -35,10 +35,11 @@ a{
     margin: 5px;
     padding-top: 5px;
     transition: all 0.5s;
+    overflow: hidden;
 }
 
 /* Dark Theme */
-.dark .card{
+.card.dark{
     background: #1C1D21;
 }
 .dark .card-title{

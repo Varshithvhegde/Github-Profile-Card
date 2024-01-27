@@ -1,5 +1,6 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+// github-card.tsx
+import React, { useEffect, useState, forwardRef } from 'react';
 import { nFormatter } from '@/app/utils';
 import styles from './github-card.module.css';
 
@@ -13,22 +14,38 @@ interface User {
   public_repos: number;
 }
 
+interface Repository {
+  name: string;
+  html_url: string;
+  stargazers_count: number;
+}
+
 interface MyCardProps {
   dataUser: string;
   dataTheme?: string;
 }
 
-const MyCard: React.FC<MyCardProps> = ({ dataUser, dataTheme = 'dark' }) => {
+const MyCard: React.ForwardRefRenderFunction<HTMLDivElement, MyCardProps> = (
+  { dataUser, dataTheme = 'dark' },
+  ref
+) => {
   const [user, setUser] = useState<User | null>(null);
+  const [topStarredRepos, setTopStarredRepos] = useState<Repository[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetch(`https://api.github.com/users/${dataUser}`, {
-          method: 'GET',
-        });
-        const result: User = await data.json();
-        setUser(result);
+        const userResponse = await fetch(`https://api.github.com/users/${dataUser}`);
+        const userData: User = await userResponse.json();
+        setUser(userData);
+
+        const reposResponse = await fetch(`https://api.github.com/users/${dataUser}/repos`);
+        const reposData: Repository[] = await reposResponse.json();
+
+        const sortedRepos = reposData.sort((a, b) => b.stargazers_count - a.stargazers_count);
+        const topTwoRepos = sortedRepos.slice(0, 2);
+
+        setTopStarredRepos(topTwoRepos);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -37,9 +54,10 @@ const MyCard: React.FC<MyCardProps> = ({ dataUser, dataTheme = 'dark' }) => {
     fetchData();
   }, [dataUser]);
 
-  const createCard = (user: User) => {
+  const createCard = (user: User, topStarredRepos: Repository[]) => {
+    const cardClassName = `${styles.card} ${dataTheme === 'dark' ? styles.dark : ''}`;
     return (
-      <div className={styles.card}>
+      <div className={cardClassName} ref={ref}>
         <div className={styles.cover}></div>
         <div className={`${styles['card-wrapper']} ${dataTheme === 'dark' ? styles.dark : ''}`}>
           <a href={`https://github.com/${user.login}`} target="_blank" rel="noopener">
@@ -67,16 +85,24 @@ const MyCard: React.FC<MyCardProps> = ({ dataUser, dataTheme = 'dark' }) => {
               </div>
             </div>
           </div>
+          {/* <div className={styles['most-starred-repos']}>
+            <h2>Top Starred Repositories:</h2>
+            <ul>
+              {topStarredRepos.map((repo) => (
+                <li key={repo.name}>
+                  <a href={repo.html_url} target="_blank" rel="noopener">
+                    {repo.name} (Stars: {nFormatter(repo.stargazers_count)})
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div> */}
         </div>
       </div>
     );
   };
 
-  return (
-    <div className={`${styles['github-card']} ${dataTheme}`}>
-      {user && createCard(user)}
-    </div>
-  );
+  return <>{user && createCard(user, topStarredRepos)}</>;
 };
 
-export default MyCard;
+export default React.forwardRef(MyCard);
