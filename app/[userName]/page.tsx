@@ -5,7 +5,6 @@ import { toPng } from "html-to-image";
 // import MyCard from "./components/github-card/github-card";
 import { Button, ChakraProvider, Input, Stack } from "@chakra-ui/react";
 import MyCard from "../components/github-card/github-card";
-import { Head } from "next/document";
 import { NextSeo } from "next-seo";
 export default function User({ params }: { params: { userName: string } }) {
     return (
