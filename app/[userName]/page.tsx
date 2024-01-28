@@ -8,10 +8,11 @@ import MyCard from "../components/github-card/github-card";
 
 export default function User({ params }: { params: { userName: string } }) {
     return (
+        <>
         <MyCard dataUser={params.userName} authToken={process.env.NEXT_PUBLIC_GITHUB_TOKEN} dataTheme="white" />
-        // <>
-        //     {params.userName} hello
-        // </>
+        
+            {params.userName} hello
+        </>
     );
   }
   
