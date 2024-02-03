@@ -4,6 +4,14 @@
 
 ## Table of Contents
 
+- [Table of Contents](#table-of-contents)
+- [Introdutions](#introdutions)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Usage](#usage)
+- [Installation](#installation)
+- [Contributing](#contributing)
+
 
 ## Introdutions
 
@@ -45,7 +53,6 @@ Using Github Dev Card is a straightforward process:
 4. Click on the "Submit" button.
 
 Your personalized Github Dev Card will be generated instantly. From here, you can download the card as a PNG image or share it directly.
-
 
 ## Installation
 
