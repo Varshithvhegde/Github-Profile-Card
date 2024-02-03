@@ -2,7 +2,7 @@
 // Home.tsximport React, { useRef, useState } from "react";
 import { toPng } from "html-to-image";
 import MyCard from "./components/github-card/github-card";
-import MyNewCard from "./components/my-card/page";
+import MyNewCard from "./components/my-card/my-card";
 import { Button, ChakraProvider, Input, Stack, Select,Flex, flexbox, Center } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 
