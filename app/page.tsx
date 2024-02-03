@@ -102,7 +102,7 @@ export default function Home() {
   };
 
   return (
-    <div style={{width :"100%" }}>
+    
     <ChakraProvider>
       <Stack spacing={4} align="center" style={{ margin: "10px", width :"100%" }}>
         <Flex align="center">
@@ -135,6 +135,5 @@ export default function Home() {
         </Button>
       </Stack>
     </ChakraProvider>
-    </div>
   );
 }

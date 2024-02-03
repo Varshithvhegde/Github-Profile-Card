@@ -106,6 +106,9 @@ a {
   }
 } */
 
+body{
+  overflow-x: hidden;
+}
 h1, div, p {
     margin: 0px;
     padding: 0px;
