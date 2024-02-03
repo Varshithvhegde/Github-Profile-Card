@@ -1,39 +1,37 @@
 "use client"
-// Home.tsx
-import React, { useRef, useState } from "react";
+// Home.tsximport React, { useRef, useState } from "react";
 import { toPng } from "html-to-image";
 import MyCard from "./components/github-card/github-card";
-import { Button, ChakraProvider, Input, Stack } from "@chakra-ui/react";
+import MyNewCard from "./components/my-card/page";
+import { Button, ChakraProvider, Input, Stack, Select,Flex, flexbox, Center } from "@chakra-ui/react";
+import { useRef, useState } from "react";
 
 export default function Home() {
   const myCardRef = useRef<HTMLDivElement>(null);
   const [githubUsername, setGithubUsername] = useState("");
   const [userInput, setUserInput] = useState("");
-  let typingTimer: NodeJS.Timeout;
+  const [selectedOption, setSelectedOption] = useState("Minimalistic");
   const githubToken = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
-  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserInput(e.target.value);
-    clearTimeout(typingTimer);
 
-    // Set a delay (e.g., 1000 milliseconds) before making the API request
-    typingTimer = setTimeout(() => {
-      setGithubUsername(e.target.value);
-      fetchData(e.target.value);
-    }, 2000);
+  // let typingTimer: NodeJS.Timeout;
+
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserInput(e.target.value)
   };
 
   const fetchData = (username: string) => {
     // Perform your API request here with the GitHub username
     console.log(`Fetching data for ${username}`);
   };
+
   const handleDownload = () => {
     if (myCardRef.current) {
-      const targetElement = myCardRef.current as HTMLElement; // Asserting non-null
+      const targetElement = myCardRef.current as HTMLElement;
       toPng(targetElement)
         .then((dataUrl) => {
           const link = document.createElement("a");
           link.href = dataUrl;
-          link.download = "my-card.png";
+          link.download = githubUsername+".png";
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
@@ -43,7 +41,7 @@ export default function Home() {
         });
     }
   };
-  
+
   const handleShare = () => {
     if (navigator.share) {
       if (myCardRef.current) {
@@ -79,22 +77,56 @@ export default function Home() {
     }
   };
 
-  return (
-    <ChakraProvider>
-      <Stack spacing={4} align="center" style={{ margin: "10px" }}>
-        <Input
-          placeholder="Enter GitHub Username"
-          value={userInput}
-          style={{ width: "25%" }}
-          onChange={handleUsernameChange}
-        />
-        <MyCard
-          ref={myCardRef}
-          dataUser={githubUsername}
-          dataTheme="white"
-          authToken={githubToken}
-        />
+  const handleOptionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedOption(e.target.value);
+  };
+//   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     setUserInput(e.target.value);
+//   };
 
+  const renderSelectedCard = () => {
+    switch (selectedOption) {
+      case "Minimalistic":
+        // setGithubUsername(userInput)
+        return <MyCard ref={myCardRef} dataUser={githubUsername} dataTheme="white" authToken={githubToken} />;
+      case "Minimalistic(dark)":
+        return <MyCard ref={myCardRef} dataUser={githubUsername} dataTheme="dark" authToken={githubToken} />;
+      case "Futuristic":
+        return <MyNewCard ref={myCardRef} dataUser={githubUsername} dataTheme="white" authToken={githubToken} />;
+      default:
+        return null;
+    }
+  };
+  const handleSubmit = () => {
+    setGithubUsername(userInput);
+  };
+
+  return (
+    <div style={{width :"100%" }}>
+    <ChakraProvider>
+      <Stack spacing={4} align="center" style={{ margin: "10px", width :"100%" }}>
+        <Flex align="center">
+          <Input
+            placeholder="Enter GitHub Username"
+            value={userInput}
+            style={{ width: "70%" }}
+            onChange={handleUsernameChange}
+          />
+          <Button onClick={handleSubmit} colorScheme="blue" style={{marginLeft: "5%"}}>
+            Submit
+          </Button>
+        </Flex>
+    
+            <Center>
+                <div style={{width:"100%"}}>
+          <Select value={selectedOption} onChange={handleOptionChange} style={{ width: "100%" }}>
+            <option value="Minimalistic">Minimalistic</option>
+            <option value="Minimalistic(dark)">Minimalistic(dark)</option>
+            <option value="Futuristic">Futuristic</option>
+          </Select>
+          </div>
+          </Center>
+        {githubUsername && renderSelectedCard()}
         <Button onClick={handleDownload} colorScheme="blue">
           Download MyCard as Image
         </Button>
@@ -103,5 +135,6 @@ export default function Home() {
         </Button>
       </Stack>
     </ChakraProvider>
+    </div>
   );
 }
