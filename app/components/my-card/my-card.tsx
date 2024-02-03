@@ -240,14 +240,14 @@ const MyNewCard:  React.ForwardRefRenderFunction<HTMLDivElement, MyCardProps> = 
               </div>
               <div className="my-4 flex justify-between">
                 <div className="flex items-center justify-center gap-1 font-bold">
-                  <div>Following:</div>
-                  <BsFillPeopleFill />
-                  <div>{userData?.following}</div>
-                </div>
-                <div className="flex items-center justify-center gap-1 font-bold">
                   <div>Followers:</div>
                   <BsFillPeopleFill />
                   <div>{userData?.followers}</div>
+                </div>
+                <div className="flex items-center justify-center gap-1 font-bold">
+                  <div>Following:</div>
+                  <BsFillPeopleFill />
+                  <div>{userData?.following}</div>
                 </div>
               </div>
               <div>
