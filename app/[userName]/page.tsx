@@ -12,10 +12,12 @@ export default function User({ params }: { params: { userName: string } }) {
   useEffect(() => {
     setRandomComponent(getRandomComponent());
   }, [params.userName]);
-  const [imageURL, setImageURL] = useState<string | null>(null);
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
+    let timeoutId: NodeJS.Timeout;
+
+    // Delay initialization after 2 seconds
+    timeoutId = setTimeout(() => {
       if (cardRef.current) {
         console.log("====================================");
         console.log("CardRef Present");
@@ -25,10 +27,20 @@ export default function User({ params }: { params: { userName: string } }) {
           .then((dataUrl) => {
             // Create a local image file
             const blob = dataURLtoBlob(dataUrl);
-            const url = URL.createObjectURL(blob);
+            const imageURL = URL.createObjectURL(blob);
 
-            // Set the local image file URL to imageURL state
-            setImageURL(url);
+            // Set the local image file URL to og:image
+            const head = document.head || document.getElementsByTagName("head")[0];
+            const ogImageTag = document.querySelector("meta[property='og:image']");
+            if (ogImageTag) {
+              ogImageTag.setAttribute("content", imageURL);
+            } else {
+              const newOgImageTag = document.createElement("meta");
+              newOgImageTag.setAttribute("property", "og:image");
+              newOgImageTag.setAttribute("content", imageURL);
+              head.appendChild(newOgImageTag);
+              
+            }
           })
           .catch((error) => {
             console.error("Error generating image:", error);
@@ -42,7 +54,7 @@ export default function User({ params }: { params: { userName: string } }) {
 
     // Cleanup function to clear the timeout in case the component unmounts
     return () => clearTimeout(timeoutId);
-  }, [randomComponent,cardRef]);
+  }, [randomComponent, cardRef]);
 
   const getRandomComponent = () => {
     const randomNumber = Math.floor(Math.random() * 3);
@@ -85,7 +97,7 @@ export default function User({ params }: { params: { userName: string } }) {
       {/* </Head> */}
 
       {randomComponent}
-      {imageURL && <img src={imageURL} alt="GitHub Card" />}
+      
     </>
   );
 }
