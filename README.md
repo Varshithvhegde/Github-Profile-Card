@@ -12,7 +12,6 @@
 - [Installation](#installation)
 - [Contributing](#contributing)
 
-
 ## Introdutions
 
 The Github Dev Card project provides a personalized and visually appealing solution to share your Github profile in a unique way. Tired of the standard Github profile pages? Now, with Github Dev Card, you can create your own custom card, making it easier and more enjoyable to share your Github information. This project simplifies the process, allowing users to generate a personalized Github card by simply entering their Github username. Additionally, users can easily download the card in high quality as a PNG image or share it instantly or share it via good old [FreeShare](https://freeShare.vercel.app) (Yeah my own previous project 😁).
@@ -31,6 +30,9 @@ In addition to downloading, users can instantly share their Github Dev Card with
 
 4. **Multiple Stylish Options**
 Github Dev Card offers users a choice of styles for their cards, including Minimalistic, Minimalistic Dark Mode, and Futuristic. This customization allows users to select a style that suits their preferences.
+
+5. **3D Tilt View**
+One of the Card offeres 3D tilt view moreover it works with gravity (in Mobile View) and Mouse Movement (Desktop View).
 
 ## Tech Stack  
 The Github Dev Card project utilizes the following technologies:
@@ -67,7 +69,12 @@ git clone https://github.com/Varshithvhegde/Github-Profile-Card.git
 cd Github-Profile-Card
 npm install
 ```
-3. Run the development server:
+3. Environment Variables
+Create a file **.env** in the root folder and add your own [github api token](https://github.com/settings/tokens) as below 
+```
+NEXT_PUBLIC_GITHUB_TOKEN=YOUR_GITHUB_TOKEN
+```
+4. Run the development server:
 ```bash
 npm run dev
 ```
