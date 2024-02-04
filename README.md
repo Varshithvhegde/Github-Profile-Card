@@ -14,7 +14,7 @@
 
 ## Introdutions
 
-The Github Dev Card project provides a personalized and visually appealing solution to share your Github profile in a unique way. Tired of the standard Github profile pages? Now, with Github Dev Card, you can create your own custom card, making it easier and more enjoyable to share your Github information. This project simplifies the process, allowing users to generate a personalized Github card by simply entering their Github username. Additionally, users can easily download the card in high quality as a PNG image or share it instantly or share it via good old [FreeShare](https://freeShare.vercel.app) (Yeah my own previous project 😁).
+[The Github Dev Card](https://github-devcard.vercel.app/) project provides a personalized and visually appealing solution to share your Github profile in a unique way. Tired of the standard Github profile pages? Now, with Github Dev Card, you can create your own custom card, making it easier and more enjoyable to share your Github information. This project simplifies the process, allowing users to generate a personalized Github card by simply entering their Github username. Additionally, users can easily download the card in high quality as a PNG image or share it instantly or share it via good old [FreeShare](https://freeShare.vercel.app) (Yeah my own previous project 😁).
 
 
 ## Features

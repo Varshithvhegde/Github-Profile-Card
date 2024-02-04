@@ -77,9 +77,6 @@ const MyNewCard:  React.ForwardRefRenderFunction<HTMLDivElement, MyCardProps> = 
           },
         });
         const user: UserData = await userResponse.json();
-        console.log('====================================');
-        console.log(user, 'UserData');
-        console.log('====================================');
         setUserData(user);
     
         // Fetch repository data from GitHub API with authentication
@@ -91,9 +88,6 @@ const MyNewCard:  React.ForwardRefRenderFunction<HTMLDivElement, MyCardProps> = 
         const reposData: Repository[] = await reposResponse.json();
         const starsCount = reposData.reduce((total, repo) => total + (repo.stargazers_count || 0), 0);
         setTotalStars(starsCount);
-        console.log('====================================');
-        console.log(reposData, 'Repo Data');
-        console.log('====================================');
         // Extract language data from repositories
         const allLanguages = reposData.reduce<string[]>((acc, repo) => {
           if (repo.language) {
@@ -127,9 +121,6 @@ const MyNewCard:  React.ForwardRefRenderFunction<HTMLDivElement, MyCardProps> = 
         }, {} as { [key: string]: string });
         setPercentage(languagePercentages);
         // Log language percentages
-        console.log('====================================');
-        console.log(languagePercentages, 'Language Percentages');
-        console.log('====================================');
          // Calculate percentage
         // const sum = uniqueLanguages.reduce((total, language) => total + (languagePercentages. || 0), 0);
         // setPercentage(sum);
@@ -140,15 +131,6 @@ const MyNewCard:  React.ForwardRefRenderFunction<HTMLDivElement, MyCardProps> = 
 
     fetchData();
   }, [dataUser]);
-
-  useEffect(() => {
-    console.log('====================================');
-    console.log(allLanguages,"Languages");
-    console.log('====================================');
-    console.log('====================================');
-    console.log(percentage,"Percentage");
-    console.log('====================================');
-  }, [allLanguages]);
 
   const slider = useRef<HTMLDivElement>(null);
   let mouseDown = false;
