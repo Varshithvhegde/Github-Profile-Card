@@ -13,23 +13,15 @@ export default function User({ params }: { params: { userName: string } }) {
     setRandomComponent(getRandomComponent());
   }, [params.userName]);
 
-  const getRandomComponent = () => {
-    const randomNumber = Math.floor(Math.random() * 3);
+  useEffect(() => {
 
-    switch (randomNumber) {
-      case 0:
-        return <MyCard ref={cardRef} dataUser={params.userName} authToken={process.env.NEXT_PUBLIC_GITHUB_TOKEN} dataTheme="white" />;
-      case 1:
-        return <MyCard ref={cardRef} dataUser={params.userName} authToken={process.env.NEXT_PUBLIC_GITHUB_TOKEN} dataTheme="dark" />;
-      case 2:
-        return <MyNewCard ref={cardRef} dataUser={params.userName} authToken={process.env.NEXT_PUBLIC_GITHUB_TOKEN} dataTheme="white" />;
-      default:
-        return null;
-    }
-  };
+    const timoutId = setTimeout(()=>{
 
-  const setOgImage = () => {
     if (cardRef.current) {
+      console.log("====================================");
+      console.log("CardRef Present");
+      console.log("====================================");
+
       toPng(cardRef.current)
         .then((dataUrl) => {
           const head = document.head || document.getElementsByTagName("head")[0];
@@ -47,22 +39,41 @@ export default function User({ params }: { params: { userName: string } }) {
         .catch((error) => {
           console.error("Error generating image:", error);
         });
+    } else {
+      console.log("====================================");
+      console.log("No CardRef");
+      console.log("====================================");
+    }
+  },2000);
+
+  return () => clearTimeout(timoutId);
+  }, [randomComponent,cardRef]);
+
+  const getRandomComponent = () => {
+    const randomNumber = Math.floor(Math.random() * 3);
+
+    switch (randomNumber) {
+      case 0:
+        return <MyCard ref={cardRef} dataUser={params.userName} authToken={process.env.NEXT_PUBLIC_GITHUB_TOKEN} dataTheme="white" />;
+      case 1:
+        return <MyCard ref={cardRef} dataUser={params.userName} authToken={process.env.NEXT_PUBLIC_GITHUB_TOKEN} dataTheme="dark" />;
+      case 2:
+        return <MyNewCard ref={cardRef} dataUser={params.userName} authToken={process.env.NEXT_PUBLIC_GITHUB_TOKEN} dataTheme="white" />;
+      default:
+        return null;
     }
   };
 
-  useEffect(() => {
-    setOgImage();
-  }, [randomComponent]);
-
   return (
     <>
-      <Head>
+      {/* <Head> */}
         <title>{`${params.userName}'s Profile`}</title>
         <meta property="og:title" content={`${params.userName}'s Profile`} />
         <meta property="og:description" content="Fondler" />
         <meta property="og:url" content={`https://yourwebsite.com/user/${params.userName}`} />
         <meta property="og:type" content="profile" />
-      </Head>
+        <meta property="og:image" content="" />
+      {/* </Head> */}
 
       {randomComponent}
     </>
