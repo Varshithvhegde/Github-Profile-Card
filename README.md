@@ -47,6 +47,8 @@ The project leverages the Github API to fetch and display user-specific informat
 Chakra UI is employed for building a visually appealing and responsive user interface. It provides a set of accessible and customizable components, contributing to a consistent and aesthetic design.
 
 ## Usage
+![frame_generic_dark](https://github.com/Varshithvhegde/Github-Profile-Card/assets/80502833/8c5bcfe4-bb7a-4dbc-a9b2-a2da06b9ad5a)
+
 Using Github Dev Card is a straightforward process:
 
 1. Visit the Github Dev Card website.
