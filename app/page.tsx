@@ -128,10 +128,10 @@ export default function Home() {
           </Center>
         {githubUsername && renderSelectedCard()}
         <Button onClick={handleDownload} colorScheme="blue">
-          Download MyCard as Image
+          Download Your DevCard
         </Button>
         <Button onClick={handleShare} colorScheme="green">
-          Share MyCard
+          Share Your DevCard
         </Button>
       </Stack>
     </ChakraProvider>
