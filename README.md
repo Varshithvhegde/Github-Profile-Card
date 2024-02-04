@@ -51,7 +51,7 @@ Chakra UI is employed for building a visually appealing and responsive user inte
 
 Using Github Dev Card is a straightforward process:
 
-1. Visit the Github Dev Card website.
+1. Visit the [Github Dev Card](https://github-devcard.vercel.app) website.
 2. Enter your Github username.
 3. Select the preferred style (Minimalistic, Minimalistic Dark Mode, or Futuristic).
 4. Click on the "Submit" button.
