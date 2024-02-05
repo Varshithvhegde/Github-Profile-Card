@@ -5,13 +5,13 @@ import MyCard from "./components/github-card/github-card";
 import MyNewCard from "./components/my-card/my-card";
 import { Button, ChakraProvider, Input, Stack, Select,Flex, flexbox, Center } from "@chakra-ui/react";
 import { useRef, useState } from "react";
-
+import { getRepoData } from "./server/server";
 export default function Home() {
   const myCardRef = useRef<HTMLDivElement>(null);
-  const [githubUsername, setGithubUsername] = useState("");
+  const [githubUsername, setGithubUsername] = useState(""); 
   const [userInput, setUserInput] = useState("");
   const [selectedOption, setSelectedOption] = useState("Minimalistic");
-  const githubToken = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
+  const githubToken: string = process.env.NEXT_PUBLIC_GITHUB_TOKEN || '';
 
   // let typingTimer: NodeJS.Timeout;
 
@@ -99,6 +99,13 @@ export default function Home() {
   };
   const handleSubmit = () => {
     setGithubUsername(userInput);
+    // getRepoData(userInput, githubToken)
+    // .then((repoData) => {
+    //   console.log('Repository Data:', repoData);
+    // })
+    // .catch((error) => {
+    //   console.error('Error:', error);
+    // });
   };
 
   return (

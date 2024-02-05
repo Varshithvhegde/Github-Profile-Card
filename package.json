@@ -25,6 +25,7 @@
     "react-dom": "^18",
     "react-icons": "^5.0.1",
     "react-parallax-tilt": "^1.7.209",
+    "server-only": "^0.0.1",
     "sharp": "^0.33.2"
   },
   "devDependencies": {
